@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const RegistrationScreen = () => {
+const RegistrationScreen  = ({ navigation }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -28,11 +28,13 @@ const RadioButton = ({ label, value, selectedValue, onValueChange }) => {
 
   return (
     <View style={styles.container}>
-      <Image 
-        style={styles.logo} 
-        source={require('./assets/images/DaiLapkuLogo.png')}
-        resizeMode="contain"
-      />
+      <View style={styles.logoContainer}>
+        <Image 
+          style={styles.logo} 
+          source={require('./assets/images/DaiLapkuLogo.png')}
+          resizeMode="contain"
+        />
+      </View>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -51,8 +53,7 @@ const RadioButton = ({ label, value, selectedValue, onValueChange }) => {
         value={email}
         onChangeText={setEmail}
       />
-     <View style={{ marginBottom: 10 }}>
-        <Text>Select Sex</Text>
+     <View style={styles.radioGroup}>
         <RadioButton label="Male" value="male" selectedValue={sex} onValueChange={setSex} />
         <RadioButton label="Female" value="female" selectedValue={sex} onValueChange={setSex} />
       </View>
@@ -83,8 +84,20 @@ const RadioButton = ({ label, value, selectedValue, onValueChange }) => {
         secureTextEntry
         onChangeText={setConfirmPassword}
       />
-      <Button title="Create an Account" onPress={handleRegistration} />
-      <Button title="Already have an account?" onPress={() => {/* Navigate to Login Screen or Handle logic */}} />
+      <View style={styles.buttonContainer}>
+        <Button
+          color="#FFFFFF" // Button text color
+          title="Create an Account"
+          onPress={handleRegistration}
+        />
+      </View>
+      <View style={styles.buttonContainer2}>
+        <Button
+          color="#F9BE84" // Button text color
+          title="Already have an account?"
+          onPress={() => navigation.navigate('Login')}
+        />
+      </View>
     </View>
   );
 };
@@ -93,26 +106,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FDE7E2', // Consistent background color
     paddingHorizontal: 20
   },
+  logoContainer: {
+    marginBottom: 30,
+  },
   logo: {
-    position: 'absolute',
-    top: 30,
-    left: 10,
-    width: 40,
-    height: 40
+    width: 50,
+    height: 50
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
+    height: 50,
+    marginBottom: 15,
     padding: 10,
-    borderRadius: 5
+    borderRadius: 50,
+    backgroundColor: 'white',
+    color: 'black',
+    width: '100%',
+  },
+  buttonContainer: {
+    backgroundColor: "#F9BE84",
+    borderRadius: 50,
+    overflow: 'hidden',
+    marginBottom: 10,
+    width: '50%',
+  },
+  buttonContainer2: {
+    backgroundColor: "#FDE7E2",
+    borderRadius: 50,
+    overflow: 'hidden',
+    marginBottom: 10,
+    width: '50%',
   },
   radioButton: {
     flexDirection: 'row',
-    alignItems: 'center',
+      alignItems: 'left',
     marginBottom: 10
   },
   radioButtonDot: {
@@ -126,11 +156,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   radioButtonDotActive: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: 'gray'
   },
   radioButtonLabel: {
     fontSize: 16
   }  
 });
+
 
 export default RegistrationScreen;
